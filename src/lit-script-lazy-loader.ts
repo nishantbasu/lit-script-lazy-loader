@@ -6,7 +6,6 @@ export interface ExportedModuleFunctionModel {
 }
 
 export interface LoaderOptions {
-  deferUpdate?: boolean | undefined;
   exportedModuleFunction?:
     | ExportedModuleFunctionModel
     | ExportedModuleFunctionModel[]
@@ -23,13 +22,16 @@ export interface LazyLoaderErrorObject {
 
 export class LitScriptLazyLoaderController {
   private host: ReactiveControllerHost;
-
-  constructor(host: ReactiveControllerHost) {
-    this.host = host;
-  }
-
-  private _fetchedScript: boolean = false;
+  private _fetchedScript: boolean = true;
   private _stopRenderUntilFetchedOrOnError: boolean = false;
+
+  constructor(host: ReactiveControllerHost, deferUpdate? : boolean) {
+    this.host = host;
+    if(deferUpdate === true) {
+      this.fetchedScript = false;
+      this._stopRenderUntilFetchedOrOnError = deferUpdate;
+    }
+  }
 
   public loadScript(
     scriptUrl: string | [string],
@@ -73,10 +75,6 @@ export class LitScriptLazyLoaderController {
           } else {
             moduleFunction = loaderOptions.exportedModuleFunction;
           }
-        }
-        //set stopRenderUntilFetchedOrOnError Flag
-        if (loaderOptions?.deferUpdate != undefined) {
-          this._stopRenderUntilFetchedOrOnError = loaderOptions?.deferUpdate;
         }
 
         //fetch script
@@ -129,11 +127,9 @@ export class LitScriptLazyLoaderController {
 
   set fetchedScript(value: boolean) {
     this._fetchedScript = value;
-    if (!this._stopRenderUntilFetchedOrOnError && !this._fetchedScript) {
-      this.fetchedScript = true;
-      return;
+    if (this._stopRenderUntilFetchedOrOnError && this._fetchedScript) {
+      this.host.requestUpdate();
     }
-    this.host.requestUpdate();
   }
 
   get fetchedScript() {
