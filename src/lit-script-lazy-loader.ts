@@ -25,9 +25,9 @@ export class LitScriptLazyLoaderController {
   private _fetchedScript: boolean = true;
   private _stopRenderUntilFetchedOrOnError: boolean = false;
 
-  constructor(host: ReactiveControllerHost, deferUpdate? : boolean) {
+  constructor(host: ReactiveControllerHost, deferUpdate?: boolean) {
     this.host = host;
-    if(deferUpdate === true) {
+    if (deferUpdate === true) {
       this.fetchedScript = false;
       this._stopRenderUntilFetchedOrOnError = deferUpdate;
     }
