@@ -1,0 +1,40 @@
+{
+  "name": "lit-script-lazy-loader",
+  "projectName": "lit-script-lazy-loader",
+  "version": "1.0.0",
+  "description": "A Lit Controller For Lazy Loading Scripts",
+  "type": "module",
+  "main": "dist/lit-script-lazy-loader.js",
+  "types": "dist/lit-script-lazy-loader.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "test": "jest --verbose=true --coverage=true --reporters=default"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nishantbasu/lit-script-lazy-loader.git"
+  },
+  "keywords": [],
+  "author": "Nishant Basu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nishantbasu/lit-script-lazy-loader/issues"
+  },
+  "homepage": "https://github.com/nishantbasu/lit-script-lazy-loader#readme",
+  "dependencies": {
+    "@lit/reactive-element": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.6",
+    "jest": "29.7.0",
+    "rimraf": "5.0.5",
+    "ts-jest": "29.1.1",
+    "typescript": "5.2.2"
+  }
+}
